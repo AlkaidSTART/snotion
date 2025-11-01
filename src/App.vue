@@ -21,8 +21,8 @@
 import NavHeader from './components/NavHeader.vue'
 import MainPage from './components/MainPage.vue'
 import InformationFooter from './components/InformationFooter.vue'
-import Notion from './components/notion.vue'
-import Explore from './components/explore.vue'
+import Notion from './components/notionH.vue'
+import Explore from './components/exploreH.vue'
 export default {
   components: {
     NavHeader,

@@ -2,6 +2,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    overflow-x: hidden;
-    overflow-x: hidden;
+    /* overflow-y: visible; */
+    /* 移除overflow-x: hidden，避免影响表单错误提示的正常显示 */
 }

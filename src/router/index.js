@@ -1,13 +1,13 @@
-import { createMemoryHistory, createRouter } from 'vue-router'
+import { createRouter, createWebHistory, createMemoryHistory } from 'vue-router'
 import notion from '@/components/notionH.vue'
-import register from '@/components/notionH.vue'
+import register from '@/components/registerH.vue'
 const routes = [
-  { path: '/', component: notion },
-  { path: '/about', component: notion }
+  { path: '/login', component: register },
+  { path: '/', component: notion }
 ]
 
 const router = createRouter({
-  history: createMemoryHistory(),
+  history: createWebHistory(),
   routes
 })
 router.beforeEach(async (to, from) => {})

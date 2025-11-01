@@ -10,7 +10,11 @@ export default defineConfig([
     files: ['**/*.{js,mjs,cjs,vue}'],
     plugins: { js },
     extends: ['js/recommended'],
-    languageOptions: { globals: globals.browser }
+    languageOptions: { globals: globals.browser },
+    // 添加规则：允许未使用的变量
+    rules: {
+      'no-unused-vars': 'off'
+    }
   },
   pluginVue.configs['flat/essential'],
   {

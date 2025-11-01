@@ -1,0 +1,9 @@
+{
+  "printWidth": 80,
+  "singleAttributePerLine": true,
+  "htmlWhitespaceSensitivity": "ignore",
+  "singleQuote": true,
+  "semi": false,
+  "trailingComma": "none",
+  "endOfLine": "auto"
+}

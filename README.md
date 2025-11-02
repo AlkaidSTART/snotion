@@ -1,5 +1,77 @@
-# vue+eslint+prettier+vite+axios
+# vue+vite+eslint+prettier+vueRouter+pinia+axios+element-plus
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+# Snotion - 现代化笔记应用
 
-Learn more about IDE Support for Vue in the [Vue Docs Scaling up Guide](https://vuejs.org/guide/scaling-up/tooling.html#ide-support).
+## 项目简介
+
+Snotion 是一个基于现代前端技术栈开发的个人笔记应用，灵感来源于 Notion，旨在为用户提供简洁、高效的笔记管理体验。
+
+## 技术特色
+
+### 🚀 现代化技术栈
+
+- **Vue 3** - 响应式前端框架
+- **Vite** - 快速构建工具
+- **Vue Router** - 单页面应用路由管理
+- **Pinia** - 状态管理解决方案
+- **Element Plus** - 企业级UI组件库
+- **Axios** - HTTP请求库
+
+### 🔧 开发工具
+
+- **ESLint** - 代码质量检查
+- **Prettier** - 代码格式化工具
+- **Git** - 版本控制系统
+
+## 核心功能
+
+### 📝 笔记管理
+
+- 创建、编辑、删除笔记
+- 富文本编辑支持
+- 笔记分类和标签管理
+
+### 👤 用户系统
+
+- 用户注册与登录
+- 个人信息管理
+- 安全认证机制
+
+### 🎨 界面特色
+
+- 响应式设计，支持多设备访问
+- 简洁美观的用户界面
+- 直观的导航体验
+
+## 项目结构
+
+```
+src/
+├── components/     # 可复用组件
+├── router/        # 路由配置
+├── stores/        # 状态管理
+├── api/           # 接口管理
+├── assets/        # 静态资源
+├── utils/         # 工具函数
+└── style.css      # 全局样式
+```
+
+## 设计理念
+
+Snotion 秉承"简洁即美"的设计理念，专注于为用户提供：
+
+- **高效** - 快速创建和管理笔记
+- **易用** - 直观的操作界面
+- **可靠** - 稳定的数据存储和同步
+
+## 未来规划
+
+- [ ] 支持Markdown语法
+- [ ] 笔记分享功能
+- [ ] 多设备同步
+- [ ] 高级搜索功能
+- [ ] 主题定制
+
+---
+
+**Snotion - 让笔记管理变得更简单** ✨

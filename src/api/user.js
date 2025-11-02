@@ -1,20 +1,14 @@
 import request from '@/utils/request'
-export function userRegestierService({
-  username,
-  password,
-  repassword,
-  email
-}) {
-  return request.post('/api/user/register', {
+export function userRegistierService({ username, password, repassword }) {
+  return request.post('/api/reg', {
     username,
     password,
-    repassword,
-    email
+    repassword
   })
 }
 //登录接口
 export function userLoginService({ username, password, email }) {
-  return request.post('/api/user/login', { username, password, email })
+  return request.post('/api/login', { username, password, email })
 }
 //获取用户信息接口
 export function userGetInfoService() {

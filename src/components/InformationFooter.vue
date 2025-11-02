@@ -105,6 +105,7 @@ a {
   padding: 0 3vw 2vw 2svw;
   flex-direction: column;
   align-items: flex-start;
+  overflow: hidden;
 }
 
 .left-head {
@@ -180,6 +181,7 @@ span {
   flex-direction: column;
   align-items: flex-start;
   flex-wrap: wrap;
+  overflow: hidden;
 }
 
 .box {

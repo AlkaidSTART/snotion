@@ -1,21 +1,21 @@
 <script setup>
 import { reactive, toRefs, ref, watch } from 'vue'
-import { userRegestierService, userLoginService } from '@/api/user'
+import { userRegistierService, userLoginService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { User, Lock, Edit } from '@element-plus/icons-vue'
 import { cellForced } from 'element-plus/es/components/table/src/config.mjs'
 const form = ref()
 const isRegister = ref(true)
+
 const formData = reactive({
   username: '',
   password: '',
-  email: '',
   re_password: ''
 })
 const rules = {
   username: [
     { required: true, message: '请输入用户名', trigger: 'blur' },
-    { min: 5, max: 10, message: '用户名必须是5-10位字符', trigger: 'blur' }
+    { min: 1, max: 10, message: '用户名必须是1-10位字符', trigger: 'blur' }
   ],
   password: [
     { required: true, message: '请输入密码', trigger: 'blur' },
@@ -25,15 +25,7 @@ const rules = {
       trigger: 'blur'
     }
   ],
-  email: [
-    { required: true, message: '请输入邮箱', trigger: 'blur' },
-    {
-      pattern: /^\w+@[a-zA-Z0-9]+(\.[a-zA-Z0-9]+)+$/,
-      message: '请输入正确的邮箱格式',
-      trigger: 'blur'
-    }
-  ],
-  re_password: [
+  repassword: [
     { required: true, message: '请确认密码', trigger: ['blur', 'change'] },
     {
       pattern: /^\S{6,15}$/,
@@ -53,25 +45,50 @@ const rules = {
   ]
 }
 async function register() {
-  await form.value.validate()
-  await userRegestierService(formData)
-  console.log(1)
-  ElMessage.success('注册成功')
-  isRegister.value = false
-}
-async function login() {
-  await form.value.validate()
-  await userLoginService(formData)
-  ElMessage.success('登录成功')
-  isRegister.value = true
+  try {
+    // 1. 表单验证
+    await form.value.validate()
+    // 2. 接口请求
+    await userRegistierService(formData)
+    // 3. 成功提示
+    ElMessage.success('注册成功')
+    isRegister.value = false
+  } catch (error) {
+    // 捕获所有可能的错误（验证失败、网络错误、服务器错误等）
+    console.log('注册失败：', error)
+    // 可根据错误类型显示对应提示
+    if (error.response) {
+      ElMessage.error(error.response.data.message || '注册失败，请重试')
+    } else if (error.code === 'ERR_NETWORK') {
+      ElMessage.error('网络连接失败')
+    } else {
+      ElMessage.error('操作失败')
+    }
+  }
 }
 
+async function login() {
+  try {
+    await form.value.validate()
+    await userLoginService(formData)
+    ElMessage.success('登录成功')
+  } catch (error) {
+    console.log('登录失败：', error)
+    if (error.response) {
+      console.log('后端详细错误：', error.response.data)
+      ElMessage.error(error.response.data.message || '注册失败')
+    } else if (error.code === 'ERR_NETWORK') {
+      ElMessage.error('网络连接失败')
+    } else {
+      ElMessage.error('操作失败')
+    }
+  }
+}
 watch(isRegister, (newValue) => {
   Object.assign(formData, {
     username: '',
     password: '',
-    email: '',
-    re_password: ''
+    repassword: ''
   })
 })
 </script>
@@ -106,16 +123,6 @@ watch(isRegister, (newValue) => {
             v-model="formData.username"
             placeholder="请输入用户名"
             :prefix-icon="User"
-          />
-        </el-form-item>
-        <el-form-item
-          label=""
-          prop="email"
-        >
-          <el-input
-            v-model="formData.email"
-            placeholder="请输入邮箱"
-            :prefix-icon="Edit"
           />
         </el-form-item>
         <el-form-item
@@ -166,6 +173,8 @@ watch(isRegister, (newValue) => {
         ref="form"
         :model="formData"
         :rules="rules"
+        size="large"
+        autocomplete="off"
       >
         <el-form-item>
           <h1>注册</h1>
@@ -178,16 +187,6 @@ watch(isRegister, (newValue) => {
             v-model="formData.username"
             placeholder="请输入用户名"
             :prefix-icon="User"
-          />
-        </el-form-item>
-        <el-form-item
-          label=""
-          prop="email"
-        >
-          <el-input
-            v-model="formData.email"
-            placeholder="请输入邮箱"
-            :prefix-icon="Edit"
           />
         </el-form-item>
         <el-form-item
@@ -205,7 +204,7 @@ watch(isRegister, (newValue) => {
           prop="re_password"
         >
           <el-input
-            v-model="formData.re_password"
+            v-model="formData.repassword"
             placeholder="请确认密码"
             :prefix-icon="Lock"
           />
@@ -234,6 +233,13 @@ watch(isRegister, (newValue) => {
   </el-row>
 </template>
 <style scoped lang="scss">
+:global(.el-message) {
+  position: fixed !important;
+  top: 45% !important;
+  left: 55% !important;
+  transform: translateX(-50%) !important;
+  z-index: 9999 !important;
+}
 .container {
   height: 100vh;
   background-color: #fff;
@@ -283,11 +289,6 @@ h1 {
 .al {
   text-decoration: none;
 }
-// .box {
-//   /* 移除overflow和text-overflow，允许文本正常显示 */
-// }
-
-/* 确保表单错误提示正常显示 */
 :deep(.el-form-item__error) {
   white-space: nowrap;
   overflow: visible;

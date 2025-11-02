@@ -1,13 +1,14 @@
 import axios from 'axios'
 import { useUserStore } from '@/stores/index.js'
 import { ElMessage } from 'element-plus'
-const baseURL = ' https://network-demo.hub.feashow.cn'
+const baseURL = ' http://big-event-vue-api-t.itheima.net'
 
 const instance = axios.create({
   baseURL,
   timeout: 5000
 })
 //响应拦截器，用于后端响应前处理数据
+// 响应拦截器，用于后端响应前处理数据
 axios.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么

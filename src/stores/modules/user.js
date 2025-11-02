@@ -4,7 +4,7 @@ import { ref } from 'vue'
 
 //用户模块
 export const useUserStore = defineStore(
-  'user',
+  'big-user',
   () => {
     const token = ref('')
     //用户信息

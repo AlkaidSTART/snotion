@@ -101,6 +101,10 @@ function setRotationStyle(type, isRotated) {
 <style scoped>
 * {
   overflow-y: hidden;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
 img {
@@ -115,7 +119,6 @@ img {
   display: flex;
   padding: 1rem 1rem 0.5rem 2rem;
   align-items: center;
-  position: fixed;
   z-index: 9999;
   margin-bottom: 10vw;
   background-color: #fff;
@@ -152,15 +155,16 @@ img {
 }
 
 .free > button {
-  width: 11rem;
+  width: 9rem;
   height: 2.5rem;
   font-size: 1.2rem;
   font-weight: 700;
   color: #ffffff;
   border-radius: 1rem;
-  border: 1px solid #000;
+  border: 2px solid #000;
   margin-left: 1rem;
   background-color: #000;
+  padding: auto;
 }
 
 .child {

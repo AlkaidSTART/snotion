@@ -1,3 +1,57 @@
+<script setup>
+import { ref } from 'vue'
+import { ElMessage } from 'element-plus' // 引入消息提示组件
+import { useUserStore } from '@/stores/index.js'
+import { useRouter } from 'vue-router'
+const router = useRouter()
+const userStore = useUserStore()
+const notionImgRef = ref(null)
+const exploreImgRef = ref(null)
+const childRef = ref(null)
+const showChild = ref(false)
+const currentDropdown = ref('')
+const freeBtn = ref(null)
+const popoverVisible = ref(false) // 控制弹出框显示隐藏
+
+function showDropdown(type) {
+  currentDropdown.value = type
+  showChild.value = true
+  setRotationStyle(type, true)
+}
+
+function hideDropdown() {
+  showChild.value = false
+  setRotationStyle(currentDropdown.value, false)
+  currentDropdown.value = ''
+}
+
+function setRotationStyle(type, isRotated) {
+  let element = null
+  if (type === 'notion') {
+    element = notionImgRef.value
+    freeBtn.value.style.backgroundColor = isRotated ? '#abcdef' : '#000'
+  } else if (type === 'explore') {
+    element = exploreImgRef.value
+    if (freeBtn.value) {
+      freeBtn.value.style.backgroundColor = isRotated ? '#abcdef' : '#000'
+    }
+  }
+
+  if (!element) return
+  element.style.transform = isRotated ? 'rotate(180deg)' : 'rotate(0deg)'
+  element.style.transition = 'transform 0.4s ease'
+}
+
+// 退出登录逻辑
+// 退出登录逻辑
+const handleLogout = () => {
+  popoverVisible.value = false // 关闭弹出框
+  userStore.removeToken()
+  userStore.setUser({}) // 修改这行：使用setUser清空用户信息，而不是removeUser
+  ElMessage.success('已成功退出登录')
+  router.push('/login')
+}
+</script>
 <template>
   <nav class="header">
     <div class="logo">
@@ -38,7 +92,42 @@
       </div>
       <div class="item">Request a demo</div>
     </div>
-    <div class="login">Leave</div>
+    <ElPopover
+      placement="bottom"
+      width="240"
+      trigger="click"
+      popper-class="popover"
+      style="margin-left: 2rem"
+      v-model:visible="popoverVisible"
+    >
+      <div class="confirm-content">
+        <p>确定要退出登录吗？</p>
+        <div class="button-group">
+          <!-- 取消按钮 -->
+          <el-button
+            size="small"
+            @click="popoverVisible = false"
+            class="cancel-btn"
+            style="width: 50px"
+          >
+            取消
+          </el-button>
+          <!-- 确认按钮（执行退出逻辑） -->
+          <el-button
+            size="small"
+            type="danger"
+            @click="handleLogout"
+            class="confirm-btn"
+          >
+            确认退出
+          </el-button>
+        </div>
+      </div>
+      <template #reference>
+        <el-button class="logout-btn">退出登录</el-button>
+      </template>
+    </ElPopover>
+
     <div class="free">
       <button ref="freeBtn">Get Notion free</button>
     </div>
@@ -60,45 +149,70 @@
   </div>
 </template>
 
-<script setup>
-import { ref } from 'vue'
-
-const notionImgRef = ref(null)
-const exploreImgRef = ref(null)
-const childRef = ref(null)
-const showChild = ref(false)
-const currentDropdown = ref('')
-const freeBtn = ref(null)
-function showDropdown(type) {
-  currentDropdown.value = type
-  showChild.value = true
-  setRotationStyle(type, true)
-}
-
-function hideDropdown() {
-  showChild.value = false
-  setRotationStyle(currentDropdown.value, false)
-  currentDropdown.value = ''
-}
-
-function setRotationStyle(type, isRotated) {
-  let element = null
-  if (type === 'notion') {
-    element = notionImgRef.value
-    freeBtn.value.style.backgroundColor = isRotated ? '#abcdef' : '#000'
-  } else if (type === 'explore') {
-    element = exploreImgRef.value
-    if (freeBtn.value) {
-      freeBtn.value.style.backgroundColor = isRotated ? '#abcdef' : '#000'
-    }
-  }
-
-  if (!element) return
-  element.style.transform = isRotated ? 'rotate(180deg)' : 'rotate(0deg)'
-  element.style.transition = 'transform 0.4s ease'
-}
-</script>
 <style scoped>
+.popover {
+  margin-left: 20px;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+}
+
+/* 退出按钮样式 */
+.logout-btn {
+  background-color: #f5f5f5;
+  color: #333;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 6px;
+  font-size: 14px;
+  transition: all 0.2s ease;
+}
+
+.logout-btn:hover {
+  background-color: #e8e8e8;
+  color: #000;
+  transform: translateY(-1px);
+}
+
+/* 弹出框内按钮样式 */
+.button-group {
+  margin-top: 18px;
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.cancel-btn {
+  background-color: #f5f5f5;
+  color: #666;
+  border: none;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.cancel-btn:hover {
+  background-color: #e8e8e8;
+  color: #333;
+}
+
+.confirm-btn {
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.confirm-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(220, 38, 38, 0.3);
+}
+
+.confirm-content p {
+  color: #333;
+  font-size: 15px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* 原有样式保持不变 */
 * {
   overflow-y: hidden;
   margin: 0;
@@ -136,6 +250,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-right: 2rem;
 }
 
 .item > img {

@@ -54,8 +54,6 @@ async function register() {
     await form.value.validate()
     // 2. 接口请求
     await userRegistierService(formData)
-    // 3. 成功提示
-    ElMessage.success('注册成功')
     isRegister.value = !isRegister.value
   } catch (error) {
     // 捕获所有可能的错误（验证失败、网络错误、服务器错误等）

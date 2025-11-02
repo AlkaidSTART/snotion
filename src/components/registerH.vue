@@ -10,7 +10,7 @@ const formData = reactive({
   username: '',
   password: '',
   email: '',
-  repassword: ''
+  re_password: ''
 })
 const rules = {
   username: [
@@ -33,8 +33,8 @@ const rules = {
       trigger: 'blur'
     }
   ],
-  repassword: [
-    { required: true, message: '请输入密码', trigger: 'blur' },
+  re_password: [
+    { required: true, message: '请确认密码', trigger: ['blur', 'change'] },
     {
       pattern: /^\S{6,15}$/,
       message: '密码必须是6-15位的非空字符',
@@ -71,7 +71,7 @@ watch(isRegister, (newValue) => {
     username: '',
     password: '',
     email: '',
-    repassword: ''
+    re_password: ''
   })
 })
 </script>
@@ -202,10 +202,10 @@ watch(isRegister, (newValue) => {
         </el-form-item>
         <el-form-item
           label=""
-          prop="repassword"
+          prop="re_password"
         >
           <el-input
-            v-model="formData.repassword"
+            v-model="formData.re_password"
             placeholder="请确认密码"
             :prefix-icon="Lock"
           />
@@ -283,18 +283,20 @@ h1 {
 .al {
   text-decoration: none;
 }
-.box {
-  /* 移除overflow和text-overflow，允许文本正常显示 */
-}
+// .box {
+//   /* 移除overflow和text-overflow，允许文本正常显示 */
+// }
 
 /* 确保表单错误提示正常显示 */
 :deep(.el-form-item__error) {
   white-space: nowrap;
   overflow: visible;
-  position: relative;
+  position: absolute; // 改为绝对定位
+  top: 100%; // 显示在输入框下方
+  left: 0;
   z-index: 10;
+  margin-top: 2px; // 添加一点间距
 }
-
 /* 确保表单项不会产生滚动 */
 :deep(.el-form-item) {
   overflow: visible;

@@ -73,11 +73,16 @@ async function login() {
   try {
     await form.value.validate()
     const res = await userLoginService(formData)
-    userStore.setToken(res.data.token) // 添加这行：存储token
-    // 存储用户信息到Pinia store
-    userStore.setUser()
-    router.push('/')
-    ElMessage.success('登录成功')
+    if (!res.data.token) {
+      ElMessage.error('您还未注册，请先注册')
+      form.value.resetFields()
+      return
+    } else {
+      userStore.setToken(res.data.token)
+      // 存储用户信息到Pinia store
+      userStore.setUser()
+      router.push('/')
+    }
   } catch (error) {
     console.log('登录失败：', error)
     if (error.response) {

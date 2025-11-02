@@ -27,7 +27,7 @@
     "@eslint/markdown": "^7.5.0",
     "@vitejs/plugin-vue": "^6.0.1",
     "eslint": "^9.39.0",
-    "eslint-plugin-vue": "^9.28.0",
+    "eslint-plugin-vue": "^10.5.1",
     "globals": "^16.5.0",
     "prettier": "3.6.2",
     "sass-embedded": "^1.93.3",

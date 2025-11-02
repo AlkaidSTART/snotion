@@ -12,12 +12,12 @@ const router = createRouter({
   routes
 })
 
-// 登录访问拦截  默认直接放行
-// router.beforeEach((to) => {
-//   // 如果没有token，且访问的的是非登录页，拦截到登录，其他情况正常放行
-//   const userStore = useUserStore()
-//   if (!userStore.token && to.path !== '/login') {
-//     return '/login'
-//   }
-// })
+//登录访问拦截  默认直接放行
+router.beforeEach((to) => {
+  // 如果没有token，且访问的的是非登录页，拦截到登录，其他情况正常放行
+  const userStore = useUserStore()
+  if (!userStore.token && to.path !== '/login') {
+    return '/login'
+  }
+})
 export default router

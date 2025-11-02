@@ -38,7 +38,7 @@
       </div>
       <div class="item">Request a demo</div>
     </div>
-    <div class="login">Log in</div>
+    <div class="login">Leave</div>
     <div class="free">
       <button ref="freeBtn">Get Notion free</button>
     </div>

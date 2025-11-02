@@ -4,6 +4,10 @@ import { userRegistierService, userLoginService } from '@/api/user'
 import { ElMessage } from 'element-plus'
 import { User, Lock, Edit } from '@element-plus/icons-vue'
 import { cellForced } from 'element-plus/es/components/table/src/config.mjs'
+import { useRouter } from 'vue-router'
+import { useUserStore } from '@/stores/index.js'
+const router = useRouter()
+const userStore = useUserStore()
 const form = ref()
 const isRegister = ref(true)
 
@@ -52,7 +56,7 @@ async function register() {
     await userRegistierService(formData)
     // 3. 成功提示
     ElMessage.success('注册成功')
-    isRegister.value = false
+    isRegister.value = !isRegister.value
   } catch (error) {
     // 捕获所有可能的错误（验证失败、网络错误、服务器错误等）
     console.log('注册失败：', error)
@@ -70,7 +74,11 @@ async function register() {
 async function login() {
   try {
     await form.value.validate()
-    await userLoginService(formData)
+    const res = await userLoginService(formData)
+    userStore.setToken(res.data.token) // 添加这行：存储token
+    // 存储用户信息到Pinia store
+    userStore.setUser()
+    router.push('/')
     ElMessage.success('登录成功')
   } catch (error) {
     console.log('登录失败：', error)

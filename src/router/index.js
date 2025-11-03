@@ -4,7 +4,7 @@ import register from '@/components/registerH.vue'
 import { useUserStore } from '@/stores/index.js'
 const routes = [
   { path: '/login', component: register },
-  { path: '/', component: notion }
+  { path: '/', component: notion, redirect: '/login' }
 ]
 
 const router = createRouter({

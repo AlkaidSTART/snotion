@@ -1,5 +1,7 @@
 name: Snotion CI/CD
 
+permissions:
+  contents: write
 # 触发条件：推送到mmm分支或创建PR时
 on:
   push:
@@ -83,3 +85,4 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
+          force_orphan: true

@@ -68,7 +68,7 @@ jobs:
           path: dist/
 
   # 部署工作流（仅在mmm分支推送时执行）
- deploy:
+  deploy:
   if: github.ref == 'refs/heads/mmm'
   needs: build
   runs-on: ubuntu-latest

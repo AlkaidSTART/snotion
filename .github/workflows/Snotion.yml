@@ -68,22 +68,42 @@ jobs:
           path: dist/
 
   # 部署工作流（仅在mmm分支推送时执行）
-  deploy:
-    if: github.ref == 'refs/heads/mmm' # 修正为mmm分支
-    needs: build
-    runs-on: ubuntu-latest
+ deploy:
+  if: github.ref == 'refs/heads/mmm'
+  needs: build
+  runs-on: ubuntu-latest
 
-    steps:
-      - name: 获取构建产物
-        uses: actions/download-artifact@v4
-        with:
-          name: build-output
-          path: dist/
+  steps:
+    - name: 获取构建产物
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+        path: dist/
 
-      - name: 部署到GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist
-          force_orphan: true
-          clean: true
+    - name: 部署到自定义分支
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        publish_branch: snotion-pages  # 指定目标分支名称（可自定义）
+        force_orphan: true  # 强制创建独立分支，清理历史
+        clean: truedeploy:
+  if: github.ref == 'refs/heads/mmm'
+  needs: build
+  runs-on: ubuntu-latest
+
+  steps:
+    - name: 获取构建产物
+      uses: actions/download-artifact@v4
+      with:
+        name: build-output
+        path: dist/
+
+    - name: 部署到自定义分支
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./dist
+        publish_branch: snotion-pages  # 指定目标分支名称（可自定义）
+        force_orphan: true  # 强制创建独立分支，清理历史
+        clean: true

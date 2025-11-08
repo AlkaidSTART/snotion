@@ -12,5 +12,5 @@ export function userLoginService({ username, password }) {
 }
 //获取用户信息接口
 export function userGetInfoService() {
-  return request.post('/api/users/:id/detail')
+  return request.post('/my/userinfo')
 }

@@ -9,7 +9,7 @@ const instance = axios.create({
 })
 //响应拦截器，用于后端响应前处理数据
 // 响应拦截器，用于后端响应前处理数据
-axios.interceptors.request.use(
+instance.interceptors.request.use(
   (config) => {
     // 在发送请求之前做些什么
     const userStore = useUserStore()

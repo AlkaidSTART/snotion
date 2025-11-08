@@ -14,7 +14,7 @@ const isRegister = ref(true)
 const formData = reactive({
   username: '',
   password: '',
-  re_password: ''
+  repassword: ''
 })
 const rules = {
   username: [
@@ -109,7 +109,7 @@ watch(isRegister, (newValue) => {
     <el-col
       :span="12"
       class="bg"
-    ></el-col>
+    />
     <el-col
       :span="6"
       :offset="3"
